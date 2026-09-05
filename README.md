@@ -8,6 +8,14 @@ A collaborative birthday world. Friends enlist pickle recruits. Kenzie commands 
 - Supabase Postgres, Auth, Realtime, RLS
 - Vercel hosting
 
+## Production (Vercel)
+
+The GitHub repo is https://github.com/santiagobarreradesign/kenzie-pickle-army
+
+Import that repository at https://vercel.com/new. Vite is auto-detected. The committed `.env` already contains the public Supabase URL and anon key, so the first Git-connected deploy should build.
+
+Local plugin deploys could create the Vercel project but could not attach the GitHub repo (the Vercel Git integration still needs to be authorized in the dashboard).
+
 ## Local setup
 
 1. Copy `.env.example` to `.env.local` and add:
