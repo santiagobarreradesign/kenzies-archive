@@ -2,7 +2,8 @@ node_modules
 dist
 dist-ssr
 *.local
-.env
 .env.local
 .vercel
 .DS_Store
+scripts/vercel-files.json
+scripts/vercel-files-slim.json
