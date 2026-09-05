@@ -1,0 +1,66 @@
+.pickle {
+  overflow: visible;
+}
+
+.pickle-figure {
+  transform-origin: 100px 210px;
+}
+
+.pickle-idle .pickle-figure {
+  animation: pickle-breathe 3.2s ease-in-out infinite;
+}
+
+.pickle-salute .pickle-figure {
+  animation: pickle-salute 0.8s ease-in-out;
+}
+
+.pickle-wave .pickle-figure {
+  animation: pickle-wave 0.9s ease-in-out;
+}
+
+.pickle-tip .pickle-figure {
+  animation: pickle-tip 1.2s ease-in-out;
+}
+
+@keyframes pickle-breathe {
+  0%,
+  100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(1.035);
+  }
+}
+
+@keyframes pickle-salute {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  40% {
+    transform: rotate(-8deg);
+  }
+}
+
+@keyframes pickle-wave {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  30% {
+    transform: rotate(7deg);
+  }
+  60% {
+    transform: rotate(-6deg);
+  }
+}
+
+@keyframes pickle-tip {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  45% {
+    transform: rotate(18deg) translateX(6px);
+  }
+}
