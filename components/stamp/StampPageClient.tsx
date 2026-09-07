@@ -29,7 +29,7 @@ export function StampPageClient({
   if (!current) {
     if (!checked) return null
     return (
-      <div className="space-y-4 px-8 py-12">
+      <div className="space-y-4 px-5 py-10 lg:px-8 lg:py-12">
         <Heading>This piece of mail could not be found.</Heading>
         <Text className="text-ui-fg-muted">It may still be pending inspection, or the number was never issued.</Text>
         <Button asChild>
@@ -41,13 +41,13 @@ export function StampPageClient({
 
   return (
     <div className="relative">
-      <div className="absolute left-9 top-6 z-30">
+      <div className="absolute left-4 top-4 z-30 lg:left-9 lg:top-6">
         <Button asChild variant="transparent" size="small">
           <Link href="/">← Return to archive</Link>
         </Button>
       </div>
       {current.local ? (
-        <Text size="small" className="absolute right-8 top-7 z-30 font-mono text-ui-fg-muted">
+        <Text size="small" className="absolute right-4 top-5 z-30 max-w-[40%] text-right font-mono text-ui-fg-muted lg:right-8 lg:top-7 lg:max-w-none">
           Held on this browser
         </Text>
       ) : null}

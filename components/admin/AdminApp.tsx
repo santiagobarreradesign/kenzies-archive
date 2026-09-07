@@ -19,7 +19,7 @@ export function AdminApp({
 
   if (!configured) {
     return (
-      <div className="space-y-3">
+      <div className="space-y-3 px-5 py-10 lg:px-8">
         <Heading>Inspection desk</Heading>
         <Text>Supabase is not configured. Submissions will be accepted locally until the ledger is connected.</Text>
       </div>
@@ -31,7 +31,7 @@ export function AdminApp({
       <form action={async (formData) => {
         const result = await signInAdmin(formData)
         if (!result.ok) toast.error(result.error)
-      }} className="mx-auto max-w-sm space-y-4">
+      }} className="mx-auto max-w-sm space-y-4 px-5 py-10">
         <Text size="xsmall" className="font-mono tracking-[0.16em] text-ui-fg-subtle">
           PRIVATE DESK
         </Text>
@@ -54,7 +54,7 @@ export function AdminApp({
 
   return (
     <div className="min-h-dvh bg-white">
-      <header className="flex items-center justify-between border-b border-ui-border-base px-8 py-4">
+      <header className="flex flex-col gap-2 border-b border-ui-border-base px-4 py-4 sm:flex-row sm:items-center sm:justify-between lg:px-8">
         <div>
           <Text size="xsmall" className="font-mono tracking-[0.14em] text-ui-fg-muted">
             KENZIE POST · ADMIN
@@ -67,8 +67,8 @@ export function AdminApp({
           {stamps.filter((stamp) => stamp.status === 'approved').length} approved · {pending} pending
         </Text>
       </header>
-      <div className="space-y-6 px-12 py-10">
-      <div className="flex items-end justify-between gap-4">
+      <div className="space-y-6 px-4 py-6 lg:px-12 lg:py-10">
+      <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
         <div>
           <Heading>Moderation</Heading>
           <Text size="small" className="text-ui-fg-muted">
@@ -94,6 +94,7 @@ export function AdminApp({
           </Button>
         ))}
       </div>
+      <div className="overflow-x-auto">
       <Table>
         <Table.Header>
           <Table.Row>
@@ -178,6 +179,7 @@ export function AdminApp({
           ))}
         </Table.Body>
       </Table>
+      </div>
     </div>
     </div>
   )

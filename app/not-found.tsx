@@ -3,7 +3,7 @@ import { Button, Heading, Text } from '@medusajs/ui'
 
 export default function NotFound() {
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 px-5 py-10 lg:px-8 lg:py-12">
       <Heading>This piece of mail could not be found.</Heading>
       <Text className="text-ui-fg-muted">It may still be pending inspection, or the number was never issued.</Text>
       <Button asChild>

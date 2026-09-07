@@ -101,7 +101,7 @@ export function PreviewStage() {
     return (
       <div className="relative min-h-dvh">
         <CanvasSurface context="flow">
-          <div className="flex min-h-dvh flex-col items-center justify-center px-6 py-16 text-center">
+          <div className="flex min-h-dvh flex-col items-center justify-center px-4 py-12 text-center lg:px-6 lg:py-16">
             <div className="relative w-[min(100%,320px)]">
               <StampPaper template={posted.template}>
                 {posted.preview_url ? (
@@ -114,7 +114,7 @@ export function PreviewStage() {
             <Badge className="mt-8" color="green">
               Waiting for Kenzie
             </Badge>
-            <Heading level="h1" className="mt-4 font-serif text-[38px] font-medium text-[#2e2b26]">
+            <Heading level="h1" className="mt-4 font-serif text-[28px] font-medium leading-8 text-[#2e2b26] lg:text-[38px]">
               Stamp {formatStampNumber(posted.number).replace('STAMP ', '')} has joined the archive.
             </Heading>
             <Text className="mt-3 max-w-xl text-pretty text-[#59574f]">
@@ -125,7 +125,7 @@ export function PreviewStage() {
             <Text size="xsmall" className="mt-4 font-mono tracking-[0.12em] text-[#8a8275]">
               {formatStampNumber(posted.number).replace('STAMP ', 'ISSUE ')} · POSTMARKED SEP · 2026 · STATUS · WAITING
             </Text>
-            <div className="mt-6 flex gap-3">
+            <div className="mt-6 flex flex-wrap justify-center gap-3">
               <Button asChild variant="secondary">
                 <Link href={`/stamp/${posted.slug}`}>Open stamp</Link>
               </Button>
@@ -142,20 +142,20 @@ export function PreviewStage() {
   return (
     <div className="relative min-h-dvh">
       <CanvasSurface context="flow">
-        <div className="absolute left-9 top-6 z-30">
+        <div className="absolute left-4 top-4 z-30 lg:left-9 lg:top-6">
           <Button asChild variant="transparent" size="small">
             <Link href="/create/message">← Back to message</Link>
           </Button>
         </div>
-        <div className="mx-auto flex min-h-dvh max-w-5xl flex-col px-8 py-20">
+        <div className="mx-auto flex min-h-dvh max-w-5xl flex-col px-4 py-12 lg:px-8 lg:py-20">
           <Text size="xsmall" className="font-mono tracking-[0.12em] text-[#8a8275]">
             STEP 4 OF 4
           </Text>
-          <Heading level="h1" className="mt-2 font-serif text-[38px] font-medium leading-[46px] text-[#2e2b26]">
+          <Heading level="h1" className="mt-2 font-serif text-[28px] font-medium leading-8 text-[#2e2b26] lg:text-[38px] lg:leading-[46px]">
             Ready for post?
           </Heading>
           <Text className="mt-3 max-w-xl text-[#59574f]">Review both sides, then send it into the archive.</Text>
-          <div className="mt-16 grid gap-16 md:grid-cols-2">
+          <div className="mt-8 grid gap-10 md:mt-16 md:grid-cols-2 md:gap-16">
             <div>
               <Text size="xsmall" className="mb-4 block text-center font-mono tracking-[0.14em] text-[#8a8275]">
                 FRONT · PUBLIC
@@ -182,8 +182,8 @@ export function PreviewStage() {
               <Turnstile siteKey={siteKey} onSuccess={setToken} />
             </div>
           ) : null}
-          <div className="mt-8 flex justify-end">
-            <Button isLoading={posting} onClick={postIt}>
+          <div className="mt-8 flex justify-stretch pb-[max(1rem,env(safe-area-inset-bottom))] sm:justify-end">
+            <Button isLoading={posting} onClick={postIt} className="w-full sm:w-auto">
               Post stamp
             </Button>
           </div>

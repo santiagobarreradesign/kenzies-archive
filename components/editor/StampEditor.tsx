@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation'
 import { Button, Heading, Input, Text, toast } from '@medusajs/ui'
 import type Konva from 'konva'
 import { HuePicker } from '@/components/editor/HuePicker'
-import { PostalShell } from '@/components/postal/PostalShell'
+import { PostalShell, SIDEBAR_COPY, SIDEBAR_FRAME, SIDEBAR_TITLE } from '@/components/postal/PostalShell'
 import { StampPaper } from '@/components/stamp/StampPaper'
 import { fileToDataUrl, photoFileError, preparePhoto } from '@/lib/stamp/photo'
 import { TEMPLATES } from '@/lib/templates'
@@ -93,17 +93,17 @@ export function StampEditor({ mode = 'draw' }: { mode?: 'draw' | 'photo' }) {
   ]
 
   const sidebar = (
-    <div className="flex h-full min-h-dvh flex-col overflow-y-auto px-9 py-7">
-      <Text size="small" className="font-mono text-[13px] text-[#5c574f]">
+    <div className={SIDEBAR_FRAME}>
+      <Text size="small" className="font-mono text-[12px] text-[#5c574f] lg:text-[13px]">
         kenziepost / create
       </Text>
-      <Text size="xsmall" className="mt-6 font-mono font-medium tracking-[0.08em] text-[#8a8275]">
+      <Text size="xsmall" className="mt-4 font-mono font-medium tracking-[0.08em] text-[#8a8275] lg:mt-6">
         STEP 2 OF 4
       </Text>
-      <Heading level="h1" className="mt-2 font-serif text-[38px] font-medium leading-[46px] text-[#2e2b26]">
+      <Heading level="h1" className={SIDEBAR_TITLE}>
         {mode === 'photo' ? 'Place the photograph.' : 'Make the front.'}
       </Heading>
-      <Text className="mt-4 max-w-[310px] text-[15px] leading-[23px] text-[#59574f]">
+      <Text className={SIDEBAR_COPY}>
         {mode === 'photo'
           ? 'Zoom and move the photograph so it sits in the grey canvas. The white edge is the stamp paper itself.'
           : 'Draw on the grey canvas or upload an image. Photographs keep their real shape.'}
@@ -180,7 +180,7 @@ export function StampEditor({ mode = 'draw' }: { mode?: 'draw' | 'photo' }) {
                 type="button"
                 aria-label={`${brush.id} brush`}
                 onClick={() => store.setStrokeSize(brush.id)}
-                className={`flex size-[38px] items-center justify-center rounded-[4px] ${
+                className={`flex size-10 items-center justify-center rounded-[4px] ${
                   store.strokeSize === brush.id ? 'bg-[#171717]' : 'border border-[#d6d3d1] bg-white'
                 }`}
               >
@@ -231,7 +231,7 @@ export function StampEditor({ mode = 'draw' }: { mode?: 'draw' | 'photo' }) {
         </>
       )}
 
-      <div className="mt-auto flex items-end justify-between gap-3 pt-8">
+      <div className="mt-6 flex items-end justify-between gap-3 pt-4 lg:mt-auto lg:pt-8">
         {mode === 'photo' ? (
           <Button
             size="small"
@@ -260,7 +260,7 @@ export function StampEditor({ mode = 'draw' }: { mode?: 'draw' | 'photo' }) {
   return (
     <>
       {draftPrompt ? (
-        <div className="absolute left-1/2 top-4 z-40 flex -translate-x-1/2 flex-wrap items-center gap-3 bg-white px-4 py-2 shadow-border">
+        <div className="absolute left-1/2 top-3 z-40 flex w-[calc(100%-1.5rem)] max-w-md -translate-x-1/2 flex-wrap items-center gap-2 bg-white px-3 py-2 shadow-border lg:top-4 lg:w-auto lg:max-w-none lg:gap-3 lg:px-4">
           <Text size="small">We found your unfinished stamp.</Text>
           <Button size="small" variant="secondary" onClick={() => setDraftPrompt(false)}>
             Continue
@@ -277,10 +277,10 @@ export function StampEditor({ mode = 'draw' }: { mode?: 'draw' | 'photo' }) {
           </Button>
         </div>
       ) : null}
-      <PostalShell sidebar={sidebar} sidebarWidth={390} context="editor">
-        <div className="flex h-full min-h-dvh flex-col px-8 py-6">
-          <div className="flex items-center justify-between">
-            <div className="flex gap-2">
+      <PostalShell sidebar={sidebar} sidebarWidth={390} context="editor" canvasFirst>
+        <div className="flex h-full min-h-0 flex-col px-4 py-4 lg:px-8 lg:py-6">
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex gap-1 lg:gap-2">
               <Button size="small" variant="transparent" onClick={store.undo}>
                 Undo
               </Button>
@@ -296,7 +296,7 @@ export function StampEditor({ mode = 'draw' }: { mode?: 'draw' | 'photo' }) {
               Preview
             </Button>
           </div>
-          <div className="flex flex-1 flex-col items-center justify-center">
+          <div className="flex min-h-0 flex-1 flex-col items-center justify-center">
             <div
               className="w-[min(100%,520px)]"
               onDragOver={(event) => {
@@ -319,7 +319,7 @@ export function StampEditor({ mode = 'draw' }: { mode?: 'draw' | 'photo' }) {
                     <Text weight="plus">Drop the photograph here</Text>
                   </div>
                 ) : store.composition.elements.length === 0 ? (
-                  <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center text-center text-[18px] leading-6 text-[#545454]">
+                  <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center text-center text-[14px] leading-5 text-[#545454] lg:text-[18px] lg:leading-6">
                     <span>
                       DRAW HERE
                       <br />
@@ -329,7 +329,7 @@ export function StampEditor({ mode = 'draw' }: { mode?: 'draw' | 'photo' }) {
                 ) : null}
               </StampPaper>
             </div>
-            <Text className="mt-6 max-w-xl text-center font-mono text-[13px] text-[#75736b]">
+            <Text className="mt-4 max-w-xl px-2 text-center font-mono text-[11px] text-[#75736b] lg:mt-6 lg:text-[13px]">
               The grey region is the editable canvas. Artwork is clipped to the selected stamp shape.
             </Text>
           </div>

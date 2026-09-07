@@ -59,13 +59,13 @@ export function PhotoCropper({
   if (!open || !src) return null
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/45 p-4">
-      <div className="flex w-full max-w-xl flex-col bg-ui-bg-base shadow-elevation-modal">
+    <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/45 p-0 sm:items-center sm:p-4">
+      <div className="flex max-h-[100dvh] w-full max-w-xl flex-col overflow-y-auto bg-ui-bg-base shadow-elevation-modal sm:max-h-[90dvh]">
         <div className="border-b border-ui-border-base px-4 py-3">
           <Text weight="plus">Crop the photograph</Text>
         </div>
         <div className="flex flex-col gap-4 p-4">
-          <div className="relative h-[360px] w-full overflow-hidden bg-ui-bg-subtle">
+          <div className="relative h-[min(360px,50vh)] w-full overflow-hidden bg-ui-bg-subtle">
             <Cropper
               image={src}
               crop={crop}

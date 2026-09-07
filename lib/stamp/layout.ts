@@ -10,11 +10,11 @@ export type GridNode = {
   fit: boolean
 }
 
-export function stampWidth(template: StampTemplate) {
+export function stampWidth(template: StampTemplate, scale = 1) {
   const spec = getTemplate(template)
-  if (spec.id === 'panoramic' || spec.id === 'landscape') return 210
-  if (spec.id === 'tall') return 170
-  return 188
+  const base =
+    spec.id === 'panoramic' || spec.id === 'landscape' ? 210 : spec.id === 'tall' || spec.id === 'pickle' ? 170 : 188
+  return Math.round(base * scale)
 }
 
 export function randInt(min: number, max: number) {

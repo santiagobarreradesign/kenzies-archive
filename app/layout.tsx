@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Caveat, Source_Serif_4 } from 'next/font/google'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
@@ -13,6 +13,12 @@ const hand = Caveat({ subsets: ['latin'], variable: '--font-hand' })
 export const metadata: Metadata = {
   title: 'Postmarked for Kenzie',
   description: 'A tiny collection made by people who think you are pretty great.',
+}
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
 }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {

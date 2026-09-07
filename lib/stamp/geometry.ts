@@ -13,6 +13,7 @@ export const CANVAS_INSET: Record<StampTemplate, string> = {
   'portrait-wide': '19.54% 23.19%',
   square: '21.66% 19.54%',
   circle: '16.92%',
+  pickle: '18.98% 33.64%',
   tall: '14.23% 38.08%',
   landscape: '26.92% 14.62%',
   panoramic: '32.69% 14.23%',
@@ -20,7 +21,7 @@ export const CANVAS_INSET: Record<StampTemplate, string> = {
 
 export function canvasRadius(template: StampTemplate | string): string | undefined {
   const id = normalizeTemplate(template)
-  if (id === 'circle') return '9999px'
+  if (id === 'circle' || id === 'pickle') return '9999px'
   if (id === 'panoramic') return '9999px'
   return undefined
 }

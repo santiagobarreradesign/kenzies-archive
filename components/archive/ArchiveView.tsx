@@ -4,7 +4,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Link from 'next/link'
 import { Button, Heading, IconButton, Text } from '@medusajs/ui'
 import { StampCard, type StampFieldController } from '@/components/archive/StampCard'
-import { PostalShell } from '@/components/postal/PostalShell'
+import { PostalShell, SIDEBAR_COPY, SIDEBAR_FRAME, SIDEBAR_TITLE } from '@/components/postal/PostalShell'
+import { stampScale, useIsMobile, useIsMobileSmall } from '@/hooks/use-media-query'
 import { computeGridArrangement, randInt, type FieldMode } from '@/lib/stamp/layout'
 import { listLocalStamps } from '@/lib/stamps/local'
 import type { StampRecord } from '@/types/stamp'
@@ -30,6 +31,9 @@ export function ArchiveView({
   const [localStamps, setLocalStamps] = useState<StampRecord[]>([])
   const [hydrated, setHydrated] = useState(false)
   const [featured, setFeatured] = useState(highlightSlug)
+  const isMobile = useIsMobile(false)
+  const isMobileSmall = useIsMobileSmall(false)
+  const scale = stampScale(isMobile, isMobileSmall)
   const allStamps = useMemo(() => {
     const seen = new Set(stamps.map((stamp) => stamp.id))
     return [...stamps, ...localStamps.filter((stamp) => !seen.has(stamp.id))]
@@ -60,16 +64,16 @@ export function ArchiveView({
       const container = fieldRef.current
       if (!container) return
       setMode('scatter')
-      const dist = Math.min(500, Math.max(container.clientWidth, container.clientHeight) * 0.42)
+      const dist = Math.min(isMobile ? 280 : 500, Math.max(container.clientWidth, container.clientHeight) * 0.42)
       allStamps.forEach((stamp, index) => {
         const controller = controllers.current.get(stamp.id)
         if (!controller) return
         window.setTimeout(() => {
-          controller.spreadOut({ container, dist, padding: 48 })
+          controller.spreadOut({ container, dist, padding: isMobile ? 20 : 48 })
         }, index * stagger)
       })
     },
-    [allStamps],
+    [allStamps, isMobile],
   )
 
   const organize = useCallback(() => {
@@ -86,9 +90,9 @@ export function ArchiveView({
       containerWidth: container.clientWidth,
       containerHeight: container.clientHeight,
       children,
-      paddingX: 24,
-      paddingY: 72,
-      gap: 12,
+      paddingX: isMobile ? 12 : 24,
+      paddingY: isMobile ? 48 : 72,
+      gap: isMobile ? 8 : 12,
     })
     positions.forEach((pos, index) => {
       const controller = controllers.current.get(pos.id)
@@ -103,7 +107,7 @@ export function ArchiveView({
         lift(pos.id)
       }, index * 4)
     })
-  }, [allStamps, lift])
+  }, [allStamps, isMobile, lift])
 
   useEffect(() => {
     if (!hydrated || allStamps.length === 0) return
@@ -111,32 +115,32 @@ export function ArchiveView({
     return () => window.clearTimeout(timer)
     // Burst once the field has real stamp nodes, then whenever the set of issues changes.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hydrated, stampIds])
+  }, [hydrated, stampIds, scale])
 
   const sidebar = (
-    <div className="flex h-full min-h-dvh flex-col px-12 py-8">
+    <div className={SIDEBAR_FRAME}>
       <div className="flex items-start justify-between gap-4">
-        <Text size="small" className="font-mono text-[13px] text-[#5c574f]">
+        <Text size="small" className="font-mono text-[12px] text-[#5c574f] lg:text-[13px]">
           kenziepost / birthday archive
         </Text>
         <IconButton
           variant="transparent"
           onClick={() => setCollapsed(true)}
           aria-label="Collapse information"
-          className="size-10"
+          className="size-10 shrink-0"
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/assets/icon-back.svg" alt="" width={20} height={20} />
         </IconButton>
       </div>
-      <Heading level="h1" className="mt-10 font-serif text-[42px] font-medium leading-[50px] tracking-tight text-[#2e2b26]">
+      <Heading level="h1" className={SIDEBAR_TITLE}>
         {unsealed ? 'The post has arrived.' : 'The weight of little things'}
       </Heading>
-      <div className="mt-6 max-w-[360px] space-y-4 text-[16px] leading-[25px] text-[#59574f]">
+      <div className={`${SIDEBAR_COPY} space-y-3 lg:space-y-4`}>
         {unsealed ? (
           <>
             <Text>The messages are open. Each reverse is a note someone wanted Kenzie to keep.</Text>
-            <Text>The artwork is still public. Read slowly. These were made for her.</Text>
+            <Text className="hidden sm:block">The artwork is still public. Read slowly. These were made for her.</Text>
           </>
         ) : (
           <>
@@ -144,15 +148,15 @@ export function ArchiveView({
               A tiny postal archive made by people who love Kenzie. Each stamp keeps one small piece of art on the front
               and one message for her on the back.
             </Text>
-            <Text>
+            <Text className="hidden sm:block">
               Until her birthday, the collection can be explored but the messages stay sealed. Drag the stamps around the
               paper — select one to see who sent it.
             </Text>
           </>
         )}
       </div>
-      <div className="mt-auto space-y-3 pt-10">
-        <Text size="xsmall" className="font-mono text-[12px] tracking-[0.04em] text-[#8a8275]">
+      <div className="mt-6 flex flex-wrap items-center gap-3 pt-2 lg:mt-auto lg:space-y-3 lg:pt-10">
+        <Text size="xsmall" className="font-mono text-[11px] tracking-[0.04em] text-[#8a8275] lg:w-full lg:text-[12px]">
           SPECIAL DELIVERY · 2026
         </Text>
         <Button asChild>
@@ -179,7 +183,7 @@ export function ArchiveView({
         </div>
       ) : null}
 
-      <div className="absolute left-1/2 top-6 z-20 flex -translate-x-1/2 items-center gap-6">
+      <div className="absolute left-1/2 top-3 z-20 flex -translate-x-1/2 items-center gap-3 lg:top-6 lg:gap-6">
         {unsealed ? (
           <>
             <Button size="small" variant="transparent" onClick={() => setFace('front')}>
@@ -205,14 +209,14 @@ export function ArchiveView({
         ref={fieldRef}
         role="list"
         aria-label="Stamp archive"
-        className="relative h-full min-h-[calc(100dvh-2rem)] w-full touch-none pt-16 pb-10"
+        className="relative h-full min-h-0 w-full touch-none pt-12 pb-8 lg:pt-16 lg:pb-10"
         onClick={(event) => {
           if (event.target === event.currentTarget) setFeatured(undefined)
         }}
       >
         <div
           ref={constraintsRef}
-          className="pointer-events-none absolute inset-[72px_20px_40px_20px]"
+          className="pointer-events-none absolute inset-[48px_12px_28px_12px] lg:inset-[72px_20px_40px_20px]"
           aria-hidden
         />
         {allStamps.length === 0 ? (
@@ -233,6 +237,7 @@ export function ArchiveView({
               dimmed={Boolean(featured) && featured !== stamp.slug}
               face={unsealed ? face : 'front'}
               isNew={featured === stamp.slug}
+              scale={scale}
             />
           ))
         )}

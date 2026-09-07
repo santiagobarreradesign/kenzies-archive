@@ -31,6 +31,7 @@ export function StampCard({
   z,
   onLift,
   onRegister,
+  scale = 1,
 }: {
   stamp: StampRecord
   selected: boolean
@@ -42,13 +43,14 @@ export function StampCard({
   z: number
   onLift: (id: string) => void
   onRegister: (controller: StampFieldController) => void
+  scale?: number
 }) {
   const reduce = useReducedMotion()
   const controls = useAnimation()
   const nodeRef = useRef<HTMLDivElement | null>(null)
   const suppressClick = useRef(false)
   const [dragging, setDragging] = useState(false)
-  const width = stampWidth(stamp.template)
+  const width = stampWidth(stamp.template, scale)
 
   const spreadOut = useCallback(
     ({ container, dist, padding = 40 }: { container: HTMLElement; dist: number; padding?: number }) => {

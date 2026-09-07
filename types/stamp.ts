@@ -3,6 +3,7 @@ export const STAMP_TEMPLATES = [
   'portrait-wide',
   'square',
   'circle',
+  'pickle',
   'tall',
   'landscape',
   'panoramic',

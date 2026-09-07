@@ -15,7 +15,7 @@ export function SealedBack({
 }) {
   const id = normalizeTemplate(template)
   const radius = canvasRadius(id)
-  const compact = id === 'tall' || id === 'panoramic'
+  const compact = id === 'tall' || id === 'panoramic' || id === 'pickle'
 
   return (
     <StampPaper template={id} paper="cream" className={className}>

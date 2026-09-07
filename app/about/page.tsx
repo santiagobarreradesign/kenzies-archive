@@ -1,17 +1,17 @@
 import Link from 'next/link'
 import { Button, Heading, Text } from '@medusajs/ui'
-import { PostalShell } from '@/components/postal/PostalShell'
+import { PostalShell, SIDEBAR_COPY, SIDEBAR_FRAME, SIDEBAR_TITLE } from '@/components/postal/PostalShell'
 
 export default function AboutPage() {
   const sidebar = (
-    <div className="flex h-full min-h-dvh flex-col px-12 py-8">
-      <Text size="small" className="font-mono text-[13px] text-[#5c574f]">
+    <div className={SIDEBAR_FRAME}>
+      <Text size="small" className="font-mono text-[12px] text-[#5c574f] lg:text-[13px]">
         kenziepost / about
       </Text>
-      <Heading level="h1" className="mt-10 font-serif text-[42px] font-medium leading-[50px] text-[#2e2b26]">
+      <Heading level="h1" className={SIDEBAR_TITLE}>
         A special commemorative archive
       </Heading>
-      <div className="mt-6 max-w-[360px] space-y-4 text-[16px] leading-[25px] text-[#59574f]">
+      <div className={`${SIDEBAR_COPY} space-y-3 lg:space-y-4`}>
         <Text>
           There is a tiny postal service dedicated exclusively to delivering things to Kenzie. For her birthday it has
           opened this archive. Friends may create one piece of postage. Every stamp is issued once, numbered, signed, and
@@ -22,7 +22,7 @@ export default function AboutPage() {
           Messages remain sealed.
         </Text>
       </div>
-      <div className="mt-auto space-y-3 pt-10">
+      <div className="mt-6 flex flex-wrap items-center gap-3 pt-2 lg:mt-auto lg:pt-10">
         <Button asChild variant="transparent" size="small">
           <Link href="/">Back</Link>
         </Button>
@@ -35,8 +35,8 @@ export default function AboutPage() {
 
   return (
     <PostalShell sidebar={sidebar} sidebarWidth={470} context="archive" showBinder>
-      <div className="flex min-h-dvh items-center justify-center px-10">
-        <Text className="max-w-md font-serif text-2xl leading-snug text-[#2e2b26]">
+      <div className="flex h-full min-h-0 items-center justify-center px-5 py-10 lg:px-10">
+        <Text className="max-w-md font-serif text-xl leading-snug text-[#2e2b26] lg:text-2xl">
           A collection of little things made by people who love you.
         </Text>
       </div>
