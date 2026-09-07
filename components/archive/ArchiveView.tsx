@@ -134,7 +134,7 @@ export function ArchiveView({
         </IconButton>
       </div>
       <Heading level="h1" className={SIDEBAR_TITLE}>
-        {unsealed ? 'The post has arrived.' : 'The weight of little things'}
+        {unsealed ? 'The post has arrived.' : 'Special delivery for Kenzie'}
       </Heading>
       <div className={`${SIDEBAR_COPY} space-y-3 lg:space-y-4`}>
         {unsealed ? (
