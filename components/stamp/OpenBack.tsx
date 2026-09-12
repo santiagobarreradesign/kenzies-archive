@@ -94,7 +94,7 @@ export function OpenBack({
       template={stamp.template}
       name={stamp.creator_name}
       location={stamp.creator_location}
-      message={stamp.message}
+      message={stamp.message ?? ''}
       postmark={formatPostmarkDate(stamp.approved_at)}
       className={className}
     />
