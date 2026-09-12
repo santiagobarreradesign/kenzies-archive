@@ -179,26 +179,23 @@ export function ArchiveView({
         </div>
       ) : null}
 
-      <div className="absolute left-1/2 top-3 z-20 flex -translate-x-1/2 items-center gap-3 lg:top-6 lg:gap-6">
+      <div className="absolute left-1/2 top-3 z-20 flex -translate-x-1/2 flex-wrap items-center justify-center gap-x-3 gap-y-1 px-3 lg:top-6 lg:gap-x-6">
         {unsealed ? (
           <>
-            <Button size="small" variant="transparent" onClick={() => setFace('front')}>
+            <Button size="small" variant={face === 'front' ? 'secondary' : 'transparent'} onClick={() => setFace('front')}>
               Front
             </Button>
-            <Button size="small" variant="transparent" onClick={() => setFace('back')}>
+            <Button size="small" variant={face === 'back' ? 'secondary' : 'transparent'} onClick={() => setFace('back')}>
               Messages
             </Button>
           </>
-        ) : (
-          <>
-            <Button size="small" variant={mode === 'organize' ? 'secondary' : 'transparent'} onClick={organize}>
-              Organize
-            </Button>
-            <Button size="small" variant={mode === 'scatter' ? 'secondary' : 'transparent'} onClick={() => scatter(3)}>
-              Shuffle
-            </Button>
-          </>
-        )}
+        ) : null}
+        <Button size="small" variant={mode === 'organize' ? 'secondary' : 'transparent'} onClick={organize}>
+          Organize
+        </Button>
+        <Button size="small" variant={mode === 'scatter' ? 'secondary' : 'transparent'} onClick={() => scatter(3)}>
+          Shuffle
+        </Button>
       </div>
 
       <div
