@@ -110,6 +110,15 @@ p {
   container-type: size;
 }
 
+.stamp-back-copy {
+  scrollbar-width: none;
+  overflow-wrap: anywhere;
+}
+
+.stamp-back-copy::-webkit-scrollbar {
+  display: none;
+}
+
 .stamp-art > img {
   height: 100%;
   width: 100%;

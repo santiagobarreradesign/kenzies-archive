@@ -19,3 +19,8 @@ export function getTurnstileSiteKey() {
 export function getAdminEmail() {
   return (process.env.ADMIN_EMAIL || '').trim().toLowerCase()
 }
+
+/** The public create desk stays shut unless this is explicitly reopened. */
+export function areSubmissionsOpen() {
+  return process.env.NEXT_PUBLIC_SUBMISSIONS_OPEN === 'true'
+}

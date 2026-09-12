@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button, Heading, Hint, Input, Label, Text, Textarea } from '@medusajs/ui'
 import { PostalShell, SIDEBAR_COPY, SIDEBAR_FRAME, SIDEBAR_TITLE } from '@/components/postal/PostalShell'
-import { StampPaper } from '@/components/stamp/StampPaper'
+import { StampBackFace } from '@/components/stamp/OpenBack'
 import { messageFormSchema, type MessageFormValues } from '@/lib/validation'
 import { useStampEditor } from '@/stores/stamp-editor'
 
@@ -97,17 +97,13 @@ export function MessageForm() {
   return (
     <PostalShell sidebar={sidebar} sidebarWidth={390} context="editor">
       <div className="flex h-full min-h-0 flex-col items-center justify-center px-4 py-8 lg:px-8 lg:py-16">
-        <div className="w-[min(100%,420px)] lg:w-[min(100%,520px)]">
-          <StampPaper template={store.composition.template} paper="cream">
-            <div className="flex h-full w-full flex-col bg-[var(--stamp-cream)] p-[12%]">
-              <p className="font-mono text-[clamp(7px,5cqw,10px)] tracking-[0.14em] text-[#8a8275]">POSTMARKED FOR KENZIE</p>
-              <p className="mt-2 text-[clamp(10px,7cqw,16px)] font-medium text-[#171717]">{name || 'Your name'}</p>
-              {location ? <p className="text-[clamp(8px,5.5cqw,12px)] text-[#59574f]">{location}</p> : null}
-              <p className="mt-3 flex-1 text-[clamp(9px,6cqw,13px)] leading-relaxed text-[#2e2b26]">
-                {message || 'The note on this side stays sealed until Kenzie’s birthday.'}
-              </p>
-            </div>
-          </StampPaper>
+        <div className="w-[min(100%,min(92vw,36rem))] lg:w-[min(100%,40rem)]">
+          <StampBackFace
+            template={store.composition.template}
+            name={name || 'Your name'}
+            location={location}
+            message={message || 'The note on this side stays sealed until Kenzie’s birthday.'}
+          />
         </div>
         <Text className="mt-4 max-w-xl px-2 text-center font-mono text-[11px] text-[#75736b] lg:mt-6 lg:text-[13px]">
           The reverse is private. The archive will only show that a sealed note exists.

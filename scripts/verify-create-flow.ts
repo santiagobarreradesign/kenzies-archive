@@ -5,7 +5,14 @@ import { fitPhotoBox, photoFileError } from '../lib/stamp/photo'
 import { getLocalStamp, listLocalStamps, LOCAL_STAMPS_KEY, saveLocalStamp } from '../lib/stamps/local'
 import { createEmptyComposition } from '../lib/stamp/composition'
 import { clamp, computeGridArrangement } from '../lib/stamp/layout'
+import {
+  allBackCopyFits,
+  backSafePadding,
+  contentRectInsideCanvas,
+  stampViewerFrameClass,
+} from '../lib/stamp/geometry'
 import { stampCompositionSchema } from '../lib/validation'
+import { areSubmissionsOpen } from '../lib/env'
 
 const store = new Map<string, string>()
 ;(globalThis as { window?: unknown }).window = {
@@ -109,5 +116,15 @@ assert.equal(hsvToHex(120, 1, 1).toLowerCase(), '#00ff00')
 const parsed = hexToHsv('#00FF00')
 assert.ok(parsed)
 assert.ok(Math.abs(parsed.h - 120) < 0.51)
+
+// Uniform 8% padding used to sit outside circle / pickle / panoramic silhouettes.
+assert.equal(contentRectInsideCanvas('circle', { top: 0.08, right: 0.08, bottom: 0.08, left: 0.08 }), false)
+assert.equal(contentRectInsideCanvas('pickle', { top: 0.08, right: 0.08, bottom: 0.08, left: 0.08 }), false)
+assert.equal(contentRectInsideCanvas('panoramic', { top: 0.08, right: 0.08, bottom: 0.08, left: 0.08 }), false)
+assert.equal(allBackCopyFits(), true)
+assert.ok(backSafePadding('circle').top >= 0.16)
+assert.match(stampViewerFrameClass('tall'), /44rem/)
+assert.match(stampViewerFrameClass('portrait'), /36rem/)
+assert.equal(areSubmissionsOpen(), false)
 
 console.log('create-flow helpers: ok')

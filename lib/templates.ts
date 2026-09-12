@@ -15,7 +15,8 @@ export const TEMPLATES: TemplateSpec[] = [
   { id: 'portrait-wide', name: 'Portrait Wide', description: 'A little more room.', width: 349, height: 396, inner: 'rect' },
   { id: 'square', name: 'Square', description: 'Even on every side.', width: 396, height: 368, inner: 'rect' },
   { id: 'circle', name: 'Circle', description: 'A round issue.', width: 430, height: 430, inner: 'round' },
-  { id: 'pickle', name: 'Pickle', description: 'A soft oval issue.', width: 260, height: 420, inner: 'round' },
+  // Aspect matches SVG ellipse rx/ry (42.53×80.64 ≈ 0.527).
+  { id: 'pickle', name: 'Pickle', description: 'A soft oval issue.', width: 222, height: 421, inner: 'round' },
   { id: 'tall', name: 'Tall', description: 'Narrow and editorial.', width: 155, height: 465, inner: 'rect' },
   { id: 'landscape', name: 'Landscape', description: 'Better for wide pictures.', width: 460, height: 300, inner: 'rect' },
   { id: 'panoramic', name: 'Panoramic', description: 'A long horizontal issue.', width: 465, height: 225, inner: 'pill' },

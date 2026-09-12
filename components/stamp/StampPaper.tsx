@@ -32,7 +32,7 @@ export function StampPaper({
         draggable={false}
         className="pointer-events-none absolute inset-0 h-full w-full select-none object-contain"
       />
-      <div className="stamp-art absolute overflow-hidden" style={{ inset, borderRadius: radius }}>
+      <div className="stamp-art absolute min-h-0 min-w-0 overflow-hidden" style={{ inset, borderRadius: radius }}>
         {children}
       </div>
     </div>

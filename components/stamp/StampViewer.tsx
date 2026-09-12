@@ -16,6 +16,7 @@ import { OpenBack } from '@/components/stamp/OpenBack'
 import { SealedBack } from '@/components/stamp/SealedBack'
 import { StampPaper } from '@/components/stamp/StampPaper'
 import { SeedArt } from '@/components/stamp/SeedArt'
+import { stampViewerFrameClass } from '@/lib/stamp/geometry'
 import { formatStampNumber } from '@/lib/stamp/slug'
 import type { StampRecord } from '@/types/stamp'
 
@@ -167,7 +168,7 @@ export function StampViewer({ stamp, unsealed }: { stamp: StampRecord; unsealed:
           onClick={dismiss}
         >
           <motion.div
-            className="flex w-[min(100%,min(420px,calc(100vw-2rem)))] flex-col items-center"
+            className={`flex ${stampViewerFrameClass(stamp.template)} flex-col items-center`}
             initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.96, y: 10 }}
             animate={
               leaving

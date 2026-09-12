@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache'
 import { createClient } from '@supabase/supabase-js'
 import { createAdminSupabase } from '@/lib/supabase/admin'
 import { createServerSupabase } from '@/lib/supabase/server'
-import { getAdminEmail, isSupabaseConfigured } from '@/lib/env'
+import { areSubmissionsOpen, getAdminEmail, isSupabaseConfigured } from '@/lib/env'
 import { verifyTurnstile } from '@/lib/security/turnstile'
 import { adminActionSchema, submitStampSchema } from '@/lib/validation'
 import { buildStampSlug } from '@/lib/stamp/slug'
@@ -35,6 +35,10 @@ async function requireAdmin() {
 }
 
 export async function submitStamp(input: unknown) {
+  if (!areSubmissionsOpen()) {
+    return { ok: false as const, error: 'The postal desk is closed.' }
+  }
+
   const parsed = submitStampSchema.safeParse(input)
   if (!parsed.success) {
     return { ok: false as const, error: parsed.error.issues[0]?.message ?? 'Invalid submission.' }

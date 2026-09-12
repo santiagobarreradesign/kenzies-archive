@@ -1,7 +1,6 @@
 'use client'
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import Link from 'next/link'
 import { Button, Heading, IconButton, Text } from '@medusajs/ui'
 import { StampCard, type StampFieldController } from '@/components/archive/StampCard'
 import { PostalShell, SIDEBAR_COPY, SIDEBAR_FRAME, SIDEBAR_TITLE } from '@/components/postal/PostalShell'
@@ -159,9 +158,6 @@ export function ArchiveView({
         <Text size="xsmall" className="font-mono text-[11px] tracking-[0.04em] text-[#8a8275] lg:w-full lg:text-[12px]">
           SPECIAL DELIVERY · 2026
         </Text>
-        <Button asChild>
-          <Link href="/create">Create a stamp</Link>
-        </Button>
       </div>
     </div>
   )

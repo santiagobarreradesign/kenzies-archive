@@ -1,10 +1,86 @@
 'use client'
 
 import { StampPaper } from '@/components/stamp/StampPaper'
-import { canvasRadius } from '@/lib/stamp/geometry'
+import { backChrome, canvasRadius } from '@/lib/stamp/geometry'
 import { formatPostmarkDate } from '@/lib/reveal'
 import { normalizeTemplate } from '@/lib/templates'
 import type { StampRecord } from '@/types/stamp'
+
+export function StampBackFace({
+  template,
+  name,
+  location,
+  message,
+  postmark,
+  className = '',
+}: {
+  template: string
+  name: string
+  location?: string | null
+  message: string
+  postmark?: string
+  className?: string
+}) {
+  const id = normalizeTemplate(template)
+  const radius = canvasRadius(id)
+  const chrome = backChrome(id)
+  const compact = chrome.compact
+  const centered = chrome.align === 'center'
+  const tight = id === 'panoramic'
+  const kicker =
+    chrome.header === 'short' ? 'FOR KENZIE' : chrome.header === 'stacked' ? 'POSTMARKED\nFOR KENZIE' : 'POSTMARKED FOR KENZIE'
+
+  return (
+    <StampPaper template={id} paper="cream" className={className}>
+      <div
+        className={`flex h-full min-h-0 w-full min-w-0 flex-col bg-[var(--stamp-cream)] ${
+          centered ? 'items-center text-center' : 'text-left'
+        }`}
+        style={{ padding: chrome.padding, borderRadius: radius }}
+      >
+        <p
+          className={`w-full max-w-full whitespace-pre-line break-words font-mono text-pretty text-[#8a8275] ${
+            compact ? 'text-[clamp(6px,3.4cqmin,9px)] tracking-[0.08em]' : 'text-[clamp(7px,3.6cqmin,10px)] tracking-[0.12em]'
+          }`}
+        >
+          {kicker}
+        </p>
+        <p
+          className={`w-full max-w-full break-words font-medium text-balance text-[#171717] ${
+            tight ? 'mt-[0.2em]' : 'mt-[0.35em]'
+          } ${compact ? 'text-[clamp(8px,5.2cqmin,15px)]' : 'text-[clamp(11px,6cqmin,18px)]'}`}
+        >
+          {name}
+        </p>
+        {location ? (
+          <p
+            className={`w-full max-w-full break-words text-[#59574f] ${
+              compact ? 'text-[clamp(6px,3.6cqmin,11px)]' : 'text-[clamp(8px,4.2cqmin,13px)]'
+            }`}
+          >
+            {location}
+          </p>
+        ) : null}
+        <p
+          className={`stamp-back-copy mt-[0.45em] min-h-0 min-w-0 w-full flex-1 overflow-x-hidden overflow-y-auto break-words text-pretty text-[#2e2b26] ${
+            tight ? 'mt-[0.28em] leading-[1.28]' : compact ? 'leading-[1.32]' : 'leading-[1.4]'
+          } ${compact ? 'text-[clamp(7px,4.3cqmin,13px)]' : 'text-[clamp(9px,4.7cqmin,15px)]'}`}
+        >
+          {message}
+        </p>
+        {postmark ? (
+          <p
+            className={`mt-auto w-full max-w-full break-words pt-[0.35em] font-mono text-[#8a8275] ${
+              compact ? 'text-[clamp(5px,2.9cqmin,8px)] tracking-[0.08em]' : 'text-[clamp(6px,3.2cqmin,9px)] tracking-[0.1em]'
+            }`}
+          >
+            POSTMARKED {postmark}
+          </p>
+        ) : null}
+      </div>
+    </StampPaper>
+  )
+}
 
 export function OpenBack({
   stamp,
@@ -13,36 +89,14 @@ export function OpenBack({
   stamp: StampRecord
   className?: string
 }) {
-  const id = normalizeTemplate(stamp.template)
-  const radius = canvasRadius(id)
-  const compact = id === 'tall' || id === 'panoramic' || id === 'pickle'
-
   return (
-    <StampPaper template={id} paper="cream" className={className}>
-      <div
-        className={`flex h-full w-full flex-col bg-[var(--stamp-cream)] text-left ${compact ? 'p-[8%]' : 'p-[12%]'}`}
-        style={{ borderRadius: radius }}
-      >
-        <p className={`font-mono tracking-[0.14em] text-[#8a8275] ${compact ? 'text-[clamp(4px,4cqw,9px)]' : 'text-[clamp(7px,5cqw,10px)]'}`}>
-          POSTMARKED FOR KENZIE
-        </p>
-        <p className={`mt-[0.4em] font-medium text-[#171717] ${compact ? 'text-[clamp(6px,6cqw,14px)]' : 'text-[clamp(10px,7cqw,16px)]'}`}>
-          {stamp.creator_name}
-        </p>
-        {stamp.creator_location ? (
-          <p className={`text-[#59574f] ${compact ? 'text-[clamp(5px,4.5cqw,11px)]' : 'text-[clamp(8px,5.5cqw,12px)]'}`}>
-            {stamp.creator_location}
-          </p>
-        ) : null}
-        <p
-          className={`mt-[0.6em] flex-1 overflow-hidden leading-relaxed text-[#2e2b26] ${compact ? 'text-[clamp(5px,5cqw,12px)]' : 'text-[clamp(9px,6cqw,13px)]'}`}
-        >
-          {stamp.message}
-        </p>
-        <p className={`mt-[0.6em] font-mono tracking-[0.12em] text-[#8a8275] ${compact ? 'text-[clamp(3px,3.5cqw,8px)]' : 'text-[clamp(6px,4.5cqw,9px)]'}`}>
-          POSTMARKED {formatPostmarkDate(stamp.approved_at)}
-        </p>
-      </div>
-    </StampPaper>
+    <StampBackFace
+      template={stamp.template}
+      name={stamp.creator_name}
+      location={stamp.creator_location}
+      message={stamp.message}
+      postmark={formatPostmarkDate(stamp.approved_at)}
+      className={className}
+    />
   )
 }
